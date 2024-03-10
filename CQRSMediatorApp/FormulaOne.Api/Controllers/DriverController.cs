@@ -1,21 +1,15 @@
+using AutoMapper;
+using FormulaOne.Data.UnitOfWorks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormulaOne.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class DriverController : BaseController
     {
-        private static readonly string[] Summaries = new[]
+        public DriverController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
         }
 
         //[HttpGet]

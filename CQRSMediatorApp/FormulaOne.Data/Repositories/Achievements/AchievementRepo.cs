@@ -15,6 +15,7 @@ namespace FormulaOne.Data.Repositories.Achievements
         public async Task<Achievement?> GetDriverAchievementAsync(Guid driverId)
         {
             return await _dbSet.FirstOrDefaultAsync(d => d.DriverId == driverId);
+
         }
     }
 }

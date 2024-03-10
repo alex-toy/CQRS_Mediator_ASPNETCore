@@ -1,21 +1,31 @@
+using AutoMapper;
+using FormulaOne.Api.Services.Achievements;
+using FormulaOne.Data.Repositories.Achievements;
+using FormulaOne.Data.Repositories.Drivers;
 using FormulaOne.Data.UnitOfWorks;
 using FormulaOne.Entities.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 
 string ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-var app = builder.Build();
+builder.Services.AddScoped<IAchievementRepo, AchievementRepo>();
+builder.Services.AddScoped<IDriverRepo, DriverRepo>();
 
-// Configure the HTTP request pipeline.
+builder.Services.AddScoped<IAchievementService, AchievementService>();
+
+
+
+
+
+var app = builder.Build();
 
 app.UseHttpsRedirection();
 
