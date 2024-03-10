@@ -1,4 +1,4 @@
-﻿namespace FormulaOne.Data
+﻿namespace FormulaOne.Data.Generics
 {
     public interface IGenericRepo<T> where T : class
     {

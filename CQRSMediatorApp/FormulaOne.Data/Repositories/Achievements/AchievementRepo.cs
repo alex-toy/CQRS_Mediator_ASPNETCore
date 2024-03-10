@@ -1,5 +1,7 @@
-﻿using FormulaOne.Entities.DbContexts;
+﻿using FormulaOne.Data.Generics;
+using FormulaOne.Entities.DbContexts;
 using FormulaOne.Entities.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace FormulaOne.Data.Repositories.Achievements
@@ -10,9 +12,9 @@ namespace FormulaOne.Data.Repositories.Achievements
         {
         }
 
-        public Task<Achievement> GetDriverAchievementAsync(Guid driverId)
+        public async Task<Achievement?> GetDriverAchievementAsync(Guid driverId)
         {
-            throw new NotImplementedException();
+            return await _dbSet.FirstOrDefaultAsync(d => d.DriverId == driverId);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using FormulaOne.Entities.DbContexts;
+﻿using FormulaOne.Data.Generics;
+using FormulaOne.Entities.DbContexts;
 using FormulaOne.Entities.Entities;
 using Microsoft.Extensions.Logging;
 

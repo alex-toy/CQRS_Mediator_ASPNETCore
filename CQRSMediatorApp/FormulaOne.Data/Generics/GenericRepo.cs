@@ -3,7 +3,7 @@ using FormulaOne.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace FormulaOne.Data
+namespace FormulaOne.Data.Generics
 {
     public class GenericRepo<T> : IGenericRepo<T> where T : BaseEntity
     {
