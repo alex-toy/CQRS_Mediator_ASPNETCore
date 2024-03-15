@@ -45,7 +45,7 @@ namespace FormulaOne.Data.Generics
 
         public virtual async Task<bool> Update(T newEntity)
         {
-            T? entityToUpdate = await _dbSet.FirstOrDefaultAsync(d => d.Id == newEntity.Id);
+            T? entityToUpdate = await _dbSet.AsNoTracking().FirstOrDefaultAsync(d => d.Id == newEntity.Id);
             if (entityToUpdate is null) return false;
             entityToUpdate = newEntity as T;
             entityToUpdate.UpdatedAt = DateTime.UtcNow;

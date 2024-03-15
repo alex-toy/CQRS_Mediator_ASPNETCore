@@ -1,7 +1,9 @@
 using AutoMapper;
 using FormulaOne.Api.Dtos.Drivers;
+using FormulaOne.Api.Queries;
 using FormulaOne.Api.Services.Drivers;
 using FormulaOne.Data.UnitOfWorks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormulaOne.Api.Controllers
@@ -11,10 +13,12 @@ namespace FormulaOne.Api.Controllers
     public class DriverController : BaseController
     {
         private readonly IDriverService _driverService;
+        private readonly IMediator _mediator;
 
-        public DriverController(IUnitOfWork unitOfWork, IMapper mapper, IDriverService driverService) : base(unitOfWork, mapper)
+        public DriverController(IUnitOfWork unitOfWork, IMapper mapper, IDriverService driverService, IMediator mediator) : base(unitOfWork, mapper)
         {
             _driverService = driverService;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -23,9 +27,9 @@ namespace FormulaOne.Api.Controllers
             IEnumerable<DriverResponseDto>? driverDtos;
             try
             {
-                driverDtos = await _driverService.GetAll();
+                driverDtos = await _mediator.Send(new GetAllDriversQuery());
 
-                if (driverDtos is null) return NotFound("no drivers found");
+                if (!driverDtos.Any()) return NotFound("no drivers found");
             }
             catch (Exception ex)
             {

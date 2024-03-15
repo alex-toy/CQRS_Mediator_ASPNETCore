@@ -22,6 +22,8 @@ builder.Services.AddSingleton(typeof(ILogger), logger);
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(Program).Assembly));
+
 builder.Services.AddScoped<IAchievementRepo, AchievementRepo>();
 builder.Services.AddScoped<IDriverRepo, DriverRepo>();
 
