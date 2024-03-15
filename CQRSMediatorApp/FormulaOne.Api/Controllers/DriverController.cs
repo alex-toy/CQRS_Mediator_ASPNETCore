@@ -1,7 +1,6 @@
 using AutoMapper;
 using FormulaOne.Api.Dtos.Drivers;
 using FormulaOne.Api.Queries;
-using FormulaOne.Api.Services.Drivers;
 using FormulaOne.Data.UnitOfWorks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +11,10 @@ namespace FormulaOne.Api.Controllers
     [Route("[controller]/[action]")]
     public class DriverController : BaseController
     {
-        private readonly IDriverService _driverService;
         private readonly IMediator _mediator;
 
-        public DriverController(IUnitOfWork unitOfWork, IMapper mapper, IDriverService driverService, IMediator mediator) : base(unitOfWork, mapper)
+        public DriverController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper)
         {
-            _driverService = driverService;
             _mediator = mediator;
         }
 
@@ -29,7 +26,7 @@ namespace FormulaOne.Api.Controllers
             {
                 driverDtos = await _mediator.Send(new GetAllDriversQuery());
 
-                if (!driverDtos.Any()) return NotFound("no drivers found");
+                if (driverDtos is null) return NotFound("no drivers found");
             }
             catch (Exception ex)
             {
@@ -46,7 +43,7 @@ namespace FormulaOne.Api.Controllers
             DriverResponseDto? driverDto;
             try
             {
-                driverDto = await _driverService.GetDriver(driverId);
+                driverDto = await _mediator.Send(new GetDriverQuery(driverId));
 
                 if (driverDto is null) return NotFound("no driver found");
             }
@@ -65,7 +62,7 @@ namespace FormulaOne.Api.Controllers
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
-                Guid guid = await _driverService.AddDriver(driverDto);
+                Guid guid = await _mediator.Send(new CreateDriverQuery(driverDto));
 
                 return CreatedAtAction(nameof(AddDriver), guid != Guid.Empty ? guid : "add driver failure");
             }
@@ -82,7 +79,7 @@ namespace FormulaOne.Api.Controllers
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
-                bool isSuccess = await _driverService.UpdateDriver(driverDto);
+                bool isSuccess = await _mediator.Send(new UpdateDriverQuery(driverDto));
 
                 return Ok(isSuccess ? "update driver success" : "update driver failure");
             }
@@ -99,7 +96,7 @@ namespace FormulaOne.Api.Controllers
             bool isSuccess;
             try
             {
-                isSuccess = await _driverService.Delete(driverId);
+                isSuccess = await _mediator.Send(new DeleteDriverQuery(driverId));
             }
             catch (Exception ex)
             {

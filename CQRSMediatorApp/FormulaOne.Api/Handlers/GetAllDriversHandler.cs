@@ -5,7 +5,7 @@ using MediatR;
 
 namespace FormulaOne.Api.Handlers
 {
-    public class GetAllDriversHandler : IRequestHandler<GetAllDriversQuery, IEnumerable<DriverResponseDto>>
+    public class GetAllDriversHandler : IRequestHandler<GetAllDriversQuery, IEnumerable<DriverResponseDto>?>
     {
         private readonly IDriverService _driverService;
 
@@ -14,11 +14,11 @@ namespace FormulaOne.Api.Handlers
             _driverService = driverService;
         }
 
-        public async Task<IEnumerable<DriverResponseDto>> Handle(GetAllDriversQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<DriverResponseDto>?> Handle(GetAllDriversQuery request, CancellationToken cancellationToken)
         {
             IEnumerable<DriverResponseDto>? driverDtos;
             driverDtos = await _driverService.GetAll();
-            return driverDtos ?? new List<DriverResponseDto>();
+            return driverDtos;
         }
     }
 }
