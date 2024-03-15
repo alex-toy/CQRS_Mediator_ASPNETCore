@@ -19,10 +19,10 @@ namespace FormulaOne.Data.Generics
             _dbSet = context.Set<T>();
         }
 
-        public virtual async Task<bool> Add(T entity)
+        public virtual async Task<Guid> Add(T entity)
         {
             await _dbSet.AddAsync(entity);
-            return true;
+            return entity.Id;
         }
 
         public virtual async Task<bool> Delete(Guid id)

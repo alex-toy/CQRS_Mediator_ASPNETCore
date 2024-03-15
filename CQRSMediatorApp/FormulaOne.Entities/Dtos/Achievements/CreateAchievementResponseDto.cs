@@ -1,4 +1,4 @@
-﻿namespace FormulaOne.Entities.Dtos
+﻿namespace FormulaOne.Entities.Dtos.Achievements
 {
     public class CreateAchievementResponseDto
     {

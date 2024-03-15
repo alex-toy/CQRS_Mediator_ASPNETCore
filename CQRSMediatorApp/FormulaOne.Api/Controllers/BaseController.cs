@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace FormulaOne.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class BaseController : Controller
     {
         protected readonly IUnitOfWork _unitOfWork;

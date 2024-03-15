@@ -16,7 +16,7 @@ namespace FormulaOne.Data.UnitOfWorks
         public UnitOfWork(AppDbContext context, ILoggerFactory loggerFactory)
         {
             _context = context;
-            var logger = loggerFactory.CreateLogger("logs");
+            ILogger logger = loggerFactory.CreateLogger("logs");
 
             Drivers = new DriverRepo(_context, logger);
             Achievements = new AchievementRepo(_context, logger);
