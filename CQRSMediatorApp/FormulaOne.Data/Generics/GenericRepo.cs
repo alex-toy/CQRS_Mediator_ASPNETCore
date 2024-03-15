@@ -29,8 +29,7 @@ namespace FormulaOne.Data.Generics
         {
             T? entity = await _dbSet.FirstOrDefaultAsync(d => d.Id == id);
             if (entity == null) return false;
-            entity.Status = 0;
-            entity.UpdatedAt = DateTime.Now;
+            _dbSet.Remove(entity);
             return true;
         }
 
@@ -50,6 +49,7 @@ namespace FormulaOne.Data.Generics
             if (entityToUpdate is null) return false;
             entityToUpdate = newEntity as T;
             entityToUpdate.UpdatedAt = DateTime.UtcNow;
+            _dbSet.Update(entityToUpdate);
             return true;
         }
     }

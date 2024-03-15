@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using FormulaOne.Entities.Dtos.Achievements;
-using FormulaOne.Entities.Dtos.Drivers;
+using FormulaOne.Api.Dtos.Achievements;
+using FormulaOne.Api.Dtos.Drivers;
 using FormulaOne.Entities.Entities;
 
 namespace FormulaOne.Api.Mappings

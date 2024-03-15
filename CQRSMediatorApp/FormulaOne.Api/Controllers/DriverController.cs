@@ -1,7 +1,7 @@
 using AutoMapper;
+using FormulaOne.Api.Dtos.Drivers;
 using FormulaOne.Api.Services.Drivers;
 using FormulaOne.Data.UnitOfWorks;
-using FormulaOne.Entities.Dtos.Drivers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormulaOne.Api.Controllers
@@ -17,6 +17,43 @@ namespace FormulaOne.Api.Controllers
             _driverService = driverService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            IEnumerable<DriverResponseDto>? driverDtos;
+            try
+            {
+                driverDtos = await _driverService.GetAll();
+
+                if (driverDtos is null) return NotFound("no drivers found");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(driverDtos);
+        }
+
+        [HttpGet]
+        [Route("{driverId:guid}")]
+        public async Task<IActionResult> GetDriver(Guid driverId)
+        {
+            DriverResponseDto? driverDto;
+            try
+            {
+                driverDto = await _driverService.GetDriver(driverId);
+
+                if (driverDto is null) return NotFound("no driver found");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(driverDto);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddDriver([FromBody] CreateDriverRequestDto driverDto)
         {
@@ -28,13 +65,13 @@ namespace FormulaOne.Api.Controllers
 
                 return CreatedAtAction(nameof(AddDriver), guid != Guid.Empty ? guid : "add driver failure");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> UpdateDriver([FromBody] UpdateDriverRequestDto driverDto)
         {
             try
@@ -45,10 +82,27 @@ namespace FormulaOne.Api.Controllers
 
                 return Ok(isSuccess ? "update driver success" : "update driver failure");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return Ok(ex.Message);
             }
+        }
+
+        [HttpDelete]
+        [Route("{driverId:guid}")]
+        public async Task<IActionResult> Delete(Guid driverId)
+        {
+            bool isSuccess;
+            try
+            {
+                isSuccess = await _driverService.Delete(driverId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(isSuccess);
         }
     }
 }

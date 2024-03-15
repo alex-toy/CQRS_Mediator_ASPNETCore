@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using FormulaOne.Api.Dtos.Achievements;
 using FormulaOne.Api.Services.Achievements;
 using FormulaOne.Data.UnitOfWorks;
-using FormulaOne.Entities.Dtos.Achievements;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormulaOne.Api.Controllers
@@ -30,7 +30,6 @@ namespace FormulaOne.Api.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
 
@@ -54,7 +53,7 @@ namespace FormulaOne.Api.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> UpdateAchievement([FromBody] UpdateAchievementRequestDto driverDto)
         {
             try

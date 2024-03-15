@@ -1,5 +1,4 @@
-﻿using FormulaOne.Entities.Dtos;
-using FormulaOne.Entities.Dtos.Achievements;
+﻿using FormulaOne.Api.Dtos.Achievements;
 
 namespace FormulaOne.Api.Services.Achievements
 {
